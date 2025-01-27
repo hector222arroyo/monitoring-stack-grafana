@@ -1,2 +1,5 @@
 # Environments
 .env
+
+grafana_db/*
+prometheus_db/*

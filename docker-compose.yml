@@ -11,7 +11,7 @@ services:
       - "--web.route-prefix=/"
       - "--storage.tsdb.retention.time=${RETENTION_TIME}"
       - "--web.enable-lifecycle"
-    restart: unless-stopped
+    restart: ${RESTART_POLICY}
     ports:
       - "${PROM_PORT}:9090"
     networks:
@@ -26,10 +26,13 @@ services:
       - /var/run:/var/run:rw
       - /sys:/sys:ro
       - /var/lib/docker/:/var/lib/docker:ro
+    restart: ${RESTART_POLICY}
+
   node-exporter:
     image: prom/node-exporter
     ports:
       - "${NODEXPORTER_PORT}:9100"
+    restart: ${RESTART_POLICY}
 
   grafana:
     image: grafana/grafana
@@ -44,6 +47,7 @@ services:
       - "${GRAFANA_PORT}:3000"
     networks:
       - monitor-net
+    restart: ${RESTART_POLICY}
 
 networks:
   monitor-net:
